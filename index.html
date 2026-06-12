@@ -606,7 +606,7 @@
     <div class="info-card wide">
       <div class="icon">📝</div>
       <div class="label">Como se inscrever</div>
-      <div class="value">Presencialmente com Ianne (3º info B) &nbsp;·&nbsp;</div>
+      <div class="value">Presencialmente com Ianne (3º info B) &nbsp;·&nbsp; Link de inscrição disponível dia 15/06</div>
     </div>
   </div>
 </section>
@@ -615,7 +615,7 @@
   <div class="form-wrap">
     <div class="dupla-header">
       <h2>INSCRIÇÃO DA DUPLA</h2>
-      <p>Preencha os dados da sua dupla e envie o comprovante do PIX para confirmar.</p>
+      <p>Preencha os dados da sua dupla e confirme sua inscrição via WhatsApp.</p>
     </div>
 
     <div class="dupla-box">
@@ -655,7 +655,7 @@
     <div class="pix-box">
       <h3>💳 Pagamento via PIX</h3>
       <div class="pix-value">R$ 10,00</div>
-      <div class="pix-desc">Valor por dupla &mdash; realize o pagamento e envie o comprovante abaixo</div>
+      <div class="pix-desc">Valor por dupla &mdash; realize o pagamento antes de confirmar no WhatsApp.</div>
       <div class="pix-key-box" onclick="copyPix()">
         <span class="pix-key">milllaemanuelli@gmail.com</span>
         <button class="copy-btn" title="Copiar chave PIX">📋</button>
@@ -663,24 +663,8 @@
       <div class="copy-toast" id="copyToast"></div>
     </div>
 
-    <div class="upload-box">
-      <h3>📎 Comprovante de Pagamento</h3>
-      <div class="upload-area" id="uploadArea">
-        <input type="file" id="comprovanteFile" accept="image/*" onchange="previewFile(this)">
-        <div class="upload-icon">📄</div>
-        <div class="upload-text">
-          <strong>Clique aqui</strong> ou arraste a foto do comprovante<br>
-          <span style="font-size:12px; color:#555;">JPG, PNG, WEBP – máx. 10MB</span>
-        </div>
-      </div>
-      <div class="upload-preview" id="uploadPreview">
-        <img id="previewImg" src="" alt="Comprovante">
-        <div class="file-name" id="fileName"></div>
-      </div>
-    </div>
-
     <button class="btn-primary" id="btnEnviar" onclick="enviarInscricao()" disabled>
-      ENVIAR COMPROVANTE E CONFIRMAR INSCRIÇÃO
+      CONFIRMAR INSCRIÇÃO NO WHATSAPP
     </button>
     <div id="statusMsg"></div>
   </div>
@@ -695,8 +679,8 @@
 <div class="success-overlay" id="successOverlay">
   <div class="success-card">
     <div class="success-icon">🏆</div>
-    <h2>INSCRIÇÃO ENVIADA!</h2>
-    <p>Sua inscrição foi recebida e você está sendo redirecionado para o WhatsApp para enviar o comprovante! Boa sorte no campeonato!</p>
+    <h2>INSCRIÇÃO QUASE PRONTA!</h2>
+    <p>Você será redirecionado para o WhatsApp para confirmar sua inscrição. Envie o comprovante por lá.</p>
     <button class="btn-close" onclick="closeSuccess()">FECHAR</button>
   </div>
 </div>
@@ -712,23 +696,12 @@
   }
 
   // ─── File preview ───
-  function previewFile(input) {
-    const file = input.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      document.getElementById('previewImg').src = e.target.result;
-      document.getElementById('fileName').textContent = file.name;
-      document.getElementById('uploadPreview').style.display = 'block';
-      checkForm();
-    };
-    reader.readAsDataURL(file);
-  }
-
-  // ─── Enable button when file is attached ───
   function checkForm() {
-    const hasFile = document.getElementById('comprovanteFile').files.length > 0;
-    document.getElementById('btnEnviar').disabled = !hasFile;
+    const nome1  = document.getElementById('nome1').value.trim();
+    const turma1 = document.getElementById('turma1').value.trim();
+    const nome2  = document.getElementById('nome2').value.trim();
+    const turma2 = document.getElementById('turma2').value.trim();
+    document.getElementById('btnEnviar').disabled = !(nome1 && turma1 && nome2 && turma2);
   }
 
   // ─── Submit ───
@@ -738,75 +711,44 @@
     const turma1   = document.getElementById('turma1').value.trim();
     const nome2    = document.getElementById('nome2').value.trim();
     const turma2   = document.getElementById('turma2').value.trim();
-    const file     = document.getElementById('comprovanteFile').files[0];
 
     if (!nome1 || !turma1 || !nome2 || !turma2) {
       document.getElementById('statusMsg').style.color = '#FF4444';
       document.getElementById('statusMsg').textContent = '⚠️ Preencha os nomes e turmas de ambos os jogadores.';
       return;
     }
-    if (!file) {
-      document.getElementById('statusMsg').style.color = '#FF4444';
-      document.getElementById('statusMsg').textContent = '⚠️ Anexe o comprovante do PIX para continuar.';
-      return;
-    }
 
     const btn = document.getElementById('btnEnviar');
     btn.disabled = true;
-    btn.textContent = 'ENVIANDO…';
+    btn.textContent = 'ABRINDO WHATSAPP…';
     document.getElementById('statusMsg').textContent = '';
 
-    // Read file as base64 and save to localStorage
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const finalNomeDupla = nomeDupla || `${nome1} & ${nome2}`;
-      const inscricoes = JSON.parse(localStorage.getItem('inscricoes_domino') || '[]');
-      inscricoes.push({
-        id: Date.now(),
-        nomeDupla: finalNomeDupla,
-        jogador1: { nome: nome1, turma: turma1 },
-        jogador2: { nome: nome2, turma: turma2 },
-        comprovante: e.target.result,
-        fileName: file.name,
-        dataEnvio: new Date().toLocaleString('pt-BR'),
-        status: 'Pendente'
-      });
-      localStorage.setItem('inscricoes_domino', JSON.stringify(inscricoes));
+    const finalNomeDupla = nomeDupla || `${nome1} & ${nome2}`;
+    const numeroWhats = '5586994559525';
+    const textoMensagem = encodeURIComponent(
+      `👋 *Nova Inscrição - Campeonato de Dominó 2026*\n\n` +
+      `🎯 *Dupla:* ${finalNomeDupla}\n\n` +
+      `👤 *Jogador 1:* ${nome1}\n` +
+      `📚 *Turma 1:* ${turma1}\n\n` +
+      `👤 *Jogador 2:* ${nome2}\n` +
+      `📚 *Turma 2:* ${turma2}\n\n` +
+      `_Por favor, envie o comprovante de PIX nesta conversa._`
+    );
+    const urlWhats = `https://api.whatsapp.com/send?phone=${numeroWhats}&text=${textoMensagem}`;
 
-      // ─── REDIRECIONAMENTO WHATSAPP ───
-      const numeroWhats = "5586994559525";
-      const textoMensagem = encodeURIComponent(
-        `👋 *Nova Inscrição - Campeonato de Dominó 2026*\n\n` +
-        `🎯 *Dupla:* ${finalNomeDupla}\n\n` +
-        `👤 *Jogador 1:* ${nome1}\n` +
-        `📚 *Turma 1:* ${turma1}\n\n` +
-        `👤 *Jogador 2:* ${nome2}\n` +
-        `📚 *Turma 2:* ${turma2}\n\n` +
-        `🖼️ _Estou enviando o comprovante em anexo nesta conversa._`
-      );
-      
-      const urlWhats = `https://api.whatsapp.com/send?phone=${numeroWhats}&text=${textoMensagem}`;
-
-      setTimeout(() => {
-        document.getElementById('successOverlay').classList.add('active');
-        btn.textContent = 'ENVIAR COMPROVANTE E CONFIRMAR INSCRIÇÃO';
-        btn.disabled = false;
-        
-        // Abre o WhatsApp na nova aba
-        window.open(urlWhats, '_blank');
-        
-        resetForm();
-      }, 800);
-    };
-    reader.readAsDataURL(file);
+    setTimeout(() => {
+      document.getElementById('successOverlay').classList.add('active');
+      btn.textContent = 'CONFIRMAR INSCRIÇÃO NO WHATSAPP';
+      btn.disabled = false;
+      window.open(urlWhats, '_blank');
+      resetForm();
+    }, 500);
   }
 
   function resetForm() {
     ['nomeDupla','nome1','turma1','nome2','turma2'].forEach(id => {
       document.getElementById(id).value = '';
     });
-    document.getElementById('comprovanteFile').value = '';
-    document.getElementById('uploadPreview').style.display = 'none';
     document.getElementById('btnEnviar').disabled = true;
   }
 
@@ -814,20 +756,6 @@
     document.getElementById('successOverlay').classList.remove('active');
     document.getElementById('statusMsg').textContent = '';
   }
-
-  // drag-over effect
-  const area = document.getElementById('uploadArea');
-  area.addEventListener('dragover', e => { e.preventDefault(); area.classList.add('drag-over'); });
-  area.addEventListener('dragleave', () => area.classList.remove('drag-over'));
-  area.addEventListener('drop', e => {
-    e.preventDefault();
-    area.classList.remove('drag-over');
-    const dt = e.dataTransfer;
-    if (dt.files.length) {
-      document.getElementById('comprovanteFile').files = dt.files;
-      previewFile(document.getElementById('comprovanteFile'));
-    }
-  });
 </script>
 </body>
 </html>
