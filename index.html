@@ -585,21 +585,41 @@
 
   // ─── Enviar WhatsApp ───
   function enviarWhatsApp() {
-    // LINK UNIVERSAL: Funciona perfeitamente em iPhone, Android e Web sem pedir para baixar o app
-    const urlUniversalWhatsApp = "https://wa.me/message/BKF424PPVN52A1"; 
+  const nomeDupla = document.getElementById('nomeDupla').value.trim();
+  const nome1 = document.getElementById('nome1').value.trim();
+  const turma1 = document.getElementById('turma1').value.trim();
+  const nome2 = document.getElementById('nome2').value.trim();
+  const turma2 = document.getElementById('turma2').value.trim();
 
-    const nomeDupla = document.getElementById('nomeDupla').value.trim();
-    const nome1    = document.getElementById('nome1').value.trim();
-    const turma1   = document.getElementById('turma1').value.trim();
-    const nome2    = document.getElementById('nome2').value.trim();
-    const turma2   = document.getElementById('turma2').value.trim();
+  if (!nome1 || !turma1 || !nome2 || !turma2) {
+    const status = document.getElementById('statusMsg');
+    status.style.color = '#FF4444';
+    status.textContent = '⚠️ Por favor, preencha os nomes e turmas de ambos os jogadores.';
+    return;
+  }
 
-    if (!nome1 || !turma1 || !nome2 || !turma2) {
-      const status = document.getElementById('statusMsg');
-      status.style.color = '#FF4444';
-      status.textContent = '⚠️ Por favor, preencha os nomes e turmas de ambos os jogadores.';
-      return;
-    }
+  const nomeDuplaFinal = nomeDupla || `${nome1} & ${nome2}`;
+
+  const textoInscricao =
+`🏆 *Inscrição - Campeonato de Dominó 2026* 🏆
+
+🎯 *Dupla:* ${nomeDuplaFinal}
+
+👤 *Jogador 1:* ${nome1}
+🎓 *Turma:* ${turma1}
+
+👤 *Jogador 2:* ${nome2}
+🎓 *Turma:* ${turma2}
+
+📌 Estou enviando em anexo o comprovante de pagamento de R$ 10,00.`;
+
+  const mensagem = encodeURIComponent(textoInscricao);
+
+  window.open(
+    `https://wa.me/5586994559525?text=${mensagem}`,
+    '_blank'
+  );
+}
 
     const statusMsg = document.getElementById('statusMsg');
     statusMsg.textContent = '';
