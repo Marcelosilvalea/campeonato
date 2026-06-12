@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campeonato de Dominó – Terceirão Informática 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF6B00;
+    --orange-bright: #FF8C00;
+    --orange-glow: rgba(255,107,0,0.35);
+    --black: #0A0A0A;
+    --dark: #111111;
+    --dark2: #1A1A1A;
+    --dark3: #222222;
+    --white: #F5F5F5;
+    --gray: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 20px 80px;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,107,0,0.22) 0%, transparent 65%),
+      radial-gradient(ellipse 60% 40% at 10% 50%, rgba(255,107,0,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 50%, rgba(255,107,0,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Lightning lines */
+  .lightning {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; overflow: hidden; z-index: 0;
+  }
+  .lightning svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.18; }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  /* Logo circle */
+  .logo-circle {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 3px solid var(--orange);
+    background: radial-gradient(circle, #1c1a14 0%, #0a0a0a 100%);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 28px;
+    box-shadow: 0 0 30px var(--orange-glow), 0 0 60px rgba(255,107,0,0.15);
+    overflow: hidden;
+  }
+
+  .logo-inner {
+    text-align: center;
+    line-height: 1;
+  }
+  .logo-year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    color: var(--orange);
+    letter-spacing: 2px;
+  }
+  .logo-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--white);
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+  .logo-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 8px;
+    color: var(--orange);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .turma-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,107,0,0.12);
+    border: 1px solid rgba(255,107,0,0.3);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 13px;
+    color: var(--orange-bright);
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(58px, 14vw, 120px);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    text-shadow: 0 0 40px rgba(255,255,255,0.1);
+    margin-bottom: 0;
+  }
+
+  .hero h1 span {
+    color: var(--orange);
+    display: block;
+    font-size: clamp(80px, 20vw, 160px);
+    text-shadow: 0 0 60px var(--orange-glow), 0 4px 0 #a84400;
+    -webkit-text-stroke: 2px #FF6B00;
+  }
+
+  .premiacao-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, rgba(255,107,0,0.2), rgba(255,107,0,0.08));
+    border: 2px solid var(--orange);
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 2px;
+    margin-top: 24px;
+    text-transform: uppercase;
+    box-shadow: 0 0 20px var(--orange-glow);
+  }
+
+  /* ── INFO SECTION ── */
+  .info-section {
+    background: linear-gradient(180deg, var(--black) 0%, var(--dark) 100%);
+    padding: 80px 20px;
+    position: relative;
+  }
+
+  .info-section::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--orange), transparent);
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    letter-spacing: 6px;
+    color: var(--orange);
+    text-align: center;
+    margin-bottom: 48px;
+    text-shadow: 0 0 20px var(--orange-glow);
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .info-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,107,0,0.2);
+    border-radius: 10px;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .info-card:hover {
+    border-color: var(--orange);
+    box-shadow: 0 0 20px var(--orange-glow);
+  }
+
+  .info-card .icon {
+    font-size: 26px;
+    margin-bottom: 4px;
+  }
+  .info-card .label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--orange);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .info-card .value {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.4;
+  }
+
+  .info-card.wide { grid-column: 1 / -1; }
+
+  /* ── FORM SECTION ── */
+  .form-section {
+    background: var(--dark);
+    padding: 80px 20px;
+    position: relative;
+  }
+  .form-section::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--orange), transparent);
+  }
+
+  .form-wrap {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .dupla-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .dupla-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    letter-spacing: 4px;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .dupla-header p {
+    color: var(--gray);
+    font-size: 14px;
+  }
+
+  .dupla-box {
+    background: var(--dark2);
+    border: 1px solid rgba(255,107,0,0.25);
+    border-radius: 12px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+  }
+
+  .dupla-box h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--orange);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .form-row.single { grid-template-columns: 1fr; }
+
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--orange);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .field input, .field select {
+    width: 100%;
+    background: var(--dark3);
+    border: 1px solid rgba(255,107,0,0.2);
+    border-radius: 8px;
+    padding: 11px 14px;
+    color: var(--white);
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field input:focus, .field select:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px rgba(255,107,0,0.12);
+  }
+  .field input::placeholder { color: #555; }
+  .field select option { background: var(--dark3); }
+
+  /* Divider */
+  .player-divider {
+    display: flex; align-items: center; gap: 10px;
+    margin: 20px 0;
+    color: var(--gray);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .player-divider::before, .player-divider::after {
+    content: ''; flex: 1;
+    height: 1px;
+    background: rgba(255,107,0,0.15);
+  }
+
+  /* PIX Box */
+  .pix-box {
+    background: linear-gradient(135deg, rgba(255,107,0,0.1), rgba(255,107,0,0.04));
+    border: 1px solid rgba(255,107,0,0.4);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .pix-box h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .pix-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--orange);
+    text-shadow: 0 0 20px var(--orange-glow);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .pix-desc {
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 16px;
+  }
+  .pix-key-box {
+    background: var(--dark3);
+    border: 1px dashed rgba(255,107,0,0.4);
+    border-radius: 8px;
+    padding: 12px 18px;
+    display: inline-flex; align-items: center; gap: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .pix-key-box:hover { background: rgba(255,107,0,0.1); }
+  .pix-key {
+    font-family: 'Oswald', sans-serif;
+    font-size: 15px;
+    color: var(--orange-bright);
+    letter-spacing: 1px;
+  }
+  .copy-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--gray); font-size: 14px;
+    transition: color 0.2s;
+  }
+  .copy-btn:hover { color: var(--orange); }
+  .copy-toast {
+    font-size: 12px;
+    color: #4CAF50;
+    margin-top: 8px;
+    height: 16px;
+    transition: opacity 0.3s;
+  }
+
+  /* Upload */
+  .upload-box {
+    background: var(--dark2);
+    border: 1px solid rgba(255,107,0,0.25);
+    border-radius: 12px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+  }
+  .upload-box h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--orange);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .upload-area {
+    border: 2px dashed rgba(255,107,0,0.3);
+    border-radius: 10px;
+    padding: 36px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+  .upload-area:hover, .upload-area.drag-over {
+    border-color: var(--orange);
+    background: rgba(255,107,0,0.05);
+  }
+  .upload-area input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+  .upload-icon { font-size: 36px; margin-bottom: 10px; }
+  .upload-text { font-size: 14px; color: var(--gray); }
+  .upload-text strong { color: var(--orange-bright); }
+  .upload-preview {
+    margin-top: 14px;
+    display: none;
+    text-align: center;
+  }
+  .upload-preview img {
+    max-width: 100%; max-height: 180px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,107,0,0.3);
+    object-fit: cover;
+  }
+  .upload-preview .file-name {
+    font-size: 12px; color: var(--orange); margin-top: 8px;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    width: 100%;
+    background: linear-gradient(135deg, #FF6B00, #FF8C00);
+    border: none;
+    border-radius: 10px;
+    padding: 16px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--black);
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+    box-shadow: 0 4px 20px rgba(255,107,0,0.4);
+  }
+  .btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255,107,0,0.6);
+  }
+  .btn-primary:active:not(:disabled) { transform: translateY(0); }
+  .btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  /* Status message */
+  #statusMsg {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 14px;
+    min-height: 22px;
+    font-weight: 500;
+  }
+
+  /* Success overlay */
+  .success-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .success-overlay.active { display: flex; }
+  .success-card {
+    background: var(--dark2);
+    border: 2px solid var(--orange);
+    border-radius: 16px;
+    padding: 48px 36px;
+    text-align: center;
+    max-width: 440px;
+    box-shadow: 0 0 60px var(--orange-glow);
+    animation: popIn 0.35s ease;
+  }
+  @keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .success-icon { font-size: 56px; margin-bottom: 16px; }
+  .success-card h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--orange);
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+  }
+  .success-card p { color: var(--gray); font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
+  .btn-close {
+    background: var(--orange);
+    border: none; border-radius: 8px;
+    padding: 12px 32px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--black); cursor: pointer;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(255,107,0,0.15);
+    padding: 36px 20px;
+    text-align: center;
+  }
+  .footer-slogan {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .footer-slogan span { color: var(--orange); }
+  footer p { font-size: 12px; color: #444; margin-top: 8px; }
+
+  /* Domino decoration */
+  .domino-deco {
+    position: absolute;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+
+  @media (max-width: 560px) {
+    .form-row { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 52px; }
+    .hero h1 span { font-size: 78px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<section class="hero">
+  <div class="lightning">
+    <svg viewBox="0 0 800 900" preserveAspectRatio="xMidYMid slice">
+      <polyline points="120,0 95,180 140,180 60,380" stroke="#FF6B00" stroke-width="2" fill="none"/>
+      <polyline points="680,0 710,200 665,200 740,420" stroke="#FF6B00" stroke-width="2" fill="none"/>
+      <polyline points="300,0 275,120 310,120 240,260" stroke="#FF8C00" stroke-width="1.5" fill="none"/>
+      <polyline points="550,0 580,150 545,150 610,310" stroke="#FF8C00" stroke-width="1.5" fill="none"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <!-- Logo -->
+    <div class="logo-circle">
+      <div class="logo-inner">
+        <div class="logo-year">2026</div>
+        <div class="logo-name">TER<br>CEI<br>RÃO</div>
+        <div class="logo-sub">Informática</div>
+      </div>
+    </div>
+
+    <div class="turma-badge">📍 3º B – Informática &nbsp;|&nbsp; IFPI Campus Angical</div>
+
+    <div class="hero-content">
+      <h1>CAMPEONATO<br>DE<span>DOMINÓ</span></h1>
+      <div class="premiacao-badge">🏆 PREMIAÇÃO 1º E 2º LUGAR 🏆</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════ INFORMAÇÕES ════════════════════════════ -->
+<section class="info-section">
+  <h2 class="section-title">INFORMAÇÕES</h2>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="icon">👥</div>
+      <div class="label">Modalidade</div>
+      <div class="value">Apenas duplas</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">💰</div>
+      <div class="label">Inscrição</div>
+      <div class="value">R$ 10,00 por dupla</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">📅</div>
+      <div class="label">Data</div>
+      <div class="value">17 de junho de 2026</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">🕙</div>
+      <div class="label">Horário</div>
+      <div class="value">10:00 horas da manhã</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">📍</div>
+      <div class="label">Local</div>
+      <div class="value">Refeitório do IFPI</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">🎓</div>
+      <div class="label">Organização</div>
+      <div class="value">3º B – Informática<br>IFPI Campus Angical</div>
+    </div>
+    <div class="info-card wide">
+      <div class="icon">📝</div>
+      <div class="label">Como se inscrever</div>
+      <div class="value">Presencialmente com Ianne (3º info B) &nbsp;·&nbsp; Link de inscrição disponível dia 15/06</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════ FORMULÁRIO ════════════════════════════ -->
+<section class="form-section">
+  <div class="form-wrap">
+    <div class="dupla-header">
+      <h2>INSCRIÇÃO DA DUPLA</h2>
+      <p>Preencha os dados da sua dupla e envie o comprovante do PIX para confirmar.</p>
+    </div>
+
+    <!-- Nome da dupla + turma -->
+    <div class="dupla-box">
+      <h3>🎯 Nome & Turma da Dupla</h3>
+      <div class="form-row single">
+        <div class="field">
+          <label>Nome da Dupla (apelido ou combinado)</label>
+          <input type="text" id="nomeDupla" placeholder="Ex: Os Campeões, Dupla Fatal…">
+        </div>
+      </div>
+
+      <div class="player-divider">👤 Jogador 1</div>
+      <div class="form-row">
+        <div class="field">
+          <label>Nome completo</label>
+          <input type="text" id="nome1" placeholder="Ex: João Marcelo">
+        </div>
+        <div class="field">
+          <label>Turma</label>
+          <input type="text" id="turma1" placeholder="Ex: 3 Info B">
+        </div>
+      </div>
+
+      <div class="player-divider">👤 Jogador 2</div>
+      <div class="form-row">
+        <div class="field">
+          <label>Nome completo</label>
+          <input type="text" id="nome2" placeholder="Ex: Luiz Gabriel">
+        </div>
+        <div class="field">
+          <label>Turma</label>
+          <input type="text" id="turma2" placeholder="Ex: 3 Info B">
+        </div>
+      </div>
+    </div>
+
+    <!-- PIX -->
+    <div class="pix-box">
+      <h3>💳 Pagamento via PIX</h3>
+      <div class="pix-value">R$ 10,00</div>
+      <div class="pix-desc">Valor por dupla &mdash; realize o pagamento e envie o comprovante abaixo</div>
+      <div class="pix-key-box" onclick="copyPix()">
+        <span class="pix-key">milllaemanuelli@gmail.com</span>
+        <button class="copy-btn" title="Copiar chave PIX">📋</button>
+      </div>
+      <div class="copy-toast" id="copyToast"></div>
+    </div>
+
+    <!-- Upload comprovante -->
+    <div class="upload-box">
+      <h3>📎 Comprovante de Pagamento</h3>
+      <div class="upload-area" id="uploadArea">
+        <input type="file" id="comprovanteFile" accept="image/*" onchange="previewFile(this)">
+        <div class="upload-icon">📄</div>
+        <div class="upload-text">
+          <strong>Clique aqui</strong> ou arraste a foto do comprovante<br>
+          <span style="font-size:12px; color:#555;">JPG, PNG, WEBP – máx. 10MB</span>
+        </div>
+      </div>
+      <div class="upload-preview" id="uploadPreview">
+        <img id="previewImg" src="" alt="Comprovante">
+        <div class="file-name" id="fileName"></div>
+      </div>
+    </div>
+
+    <!-- Botão confirmar -->
+    <button class="btn-primary" id="btnEnviar" onclick="enviarInscricao()" disabled>
+      ENVIAR COMPROVANTE E CONFIRMAR INSCRIÇÃO
+    </button>
+    <div id="statusMsg"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════ FOOTER ════════════════════════════ -->
+<footer>
+  <div class="footer-slogan">PARTICIPE E MOSTRE <span>SEU TALENTO!</span></div>
+  <p>Terceirão Informática 2026 · 3º B – Informática · IFPI Campus Angical</p>
+  <p style="margin-top:6px; color:#333;">@3rao_infob</p>
+</footer>
+
+<!-- Success Modal -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="success-icon">🏆</div>
+    <h2>INSCRIÇÃO ENVIADA!</h2>
+    <p>Sua inscrição foi recebida e será analisada. Você será confirmado assim que o comprovante for validado. Boa sorte no campeonato!</p>
+    <button class="btn-close" onclick="closeSuccess()">FECHAR</button>
+  </div>
+</div>
+
+<script>
+  // ─── PIX copy ───
+  function copyPix() {
+    navigator.clipboard.writeText('milllaemanuelli@gmail.com').then(() => {
+      const t = document.getElementById('copyToast');
+      t.textContent = '✅ Chave PIX copiada!';
+      setTimeout(() => t.textContent = '', 2500);
+    });
+  }
+
+  // ─── File preview ───
+  function previewFile(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('previewImg').src = e.target.result;
+      document.getElementById('fileName').textContent = file.name;
+      document.getElementById('uploadPreview').style.display = 'block';
+      checkForm();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ─── Enable button when file is attached ───
+  function checkForm() {
+    const hasFile = document.getElementById('comprovanteFile').files.length > 0;
+    document.getElementById('btnEnviar').disabled = !hasFile;
+  }
+
+  // ─── Submit ───
+  function enviarInscricao() {
+    const nomeDupla = document.getElementById('nomeDupla').value.trim();
+    const nome1    = document.getElementById('nome1').value.trim();
+    const turma1   = document.getElementById('turma1').value.trim();
+    const nome2    = document.getElementById('nome2').value.trim();
+    const turma2   = document.getElementById('turma2').value.trim();
+    const file     = document.getElementById('comprovanteFile').files[0];
+
+    if (!nome1 || !turma1 || !nome2 || !turma2) {
+      document.getElementById('statusMsg').style.color = '#FF4444';
+      document.getElementById('statusMsg').textContent = '⚠️ Preencha os nomes e turmas de ambos os jogadores.';
+      return;
+    }
+    if (!file) {
+      document.getElementById('statusMsg').style.color = '#FF4444';
+      document.getElementById('statusMsg').textContent = '⚠️ Anexe o comprovante do PIX para continuar.';
+      return;
+    }
+
+    const btn = document.getElementById('btnEnviar');
+    btn.disabled = true;
+    btn.textContent = 'ENVIANDO…';
+    document.getElementById('statusMsg').textContent = '';
+
+    // Read file as base64 and save to localStorage
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const inscricoes = JSON.parse(localStorage.getItem('inscricoes_domino') || '[]');
+      inscricoes.push({
+        id: Date.now(),
+        nomeDupla: nomeDupla || `${nome1} & ${nome2}`,
+        jogador1: { nome: nome1, turma: turma1 },
+        jogador2: { nome: nome2, turma: turma2 },
+        comprovante: e.target.result,
+        fileName: file.name,
+        dataEnvio: new Date().toLocaleString('pt-BR'),
+        status: 'Pendente'
+      });
+      localStorage.setItem('inscricoes_domino', JSON.stringify(inscricoes));
+
+      setTimeout(() => {
+        document.getElementById('successOverlay').classList.add('active');
+        btn.textContent = 'ENVIAR COMPROVANTE E CONFIRMAR INSCRIÇÃO';
+        btn.disabled = false;
+        resetForm();
+      }, 800);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function resetForm() {
+    ['nomeDupla','nome1','turma1','nome2','turma2'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('comprovanteFile').value = '';
+    document.getElementById('uploadPreview').style.display = 'none';
+    document.getElementById('btnEnviar').disabled = true;
+  }
+
+  function closeSuccess() {
+    document.getElementById('successOverlay').classList.remove('active');
+    document.getElementById('statusMsg').textContent = '';
+  }
+
+  // drag-over effect
+  const area = document.getElementById('uploadArea');
+  area.addEventListener('dragover', e => { e.preventDefault(); area.classList.add('drag-over'); });
+  area.addEventListener('dragleave', () => area.classList.remove('drag-over'));
+  area.addEventListener('drop', e => {
+    e.preventDefault();
+    area.classList.remove('drag-over');
+    const dt = e.dataTransfer;
+    if (dt.files.length) {
+      document.getElementById('comprovanteFile').files = dt.files;
+      previewFile(document.getElementById('comprovanteFile'));
+    }
+  });
+</script>
+</body>
+</html>
