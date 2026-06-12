@@ -16,6 +16,7 @@
     --dark3: #222222;
     --white: #F5F5F5;
     --gray: #888;
+    --whatsapp-green: #25D366;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -375,86 +376,32 @@
     transition: opacity 0.3s;
   }
 
-  /* Upload */
-  .upload-box {
-    background: var(--dark2);
-    border: 1px solid rgba(255,107,0,0.25);
-    border-radius: 12px;
-    padding: 28px 24px;
-    margin-bottom: 20px;
-  }
-  .upload-box h3 {
-    font-family: 'Oswald', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--orange);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    display: flex; align-items: center; gap: 8px;
-  }
-
-  .upload-area {
-    border: 2px dashed rgba(255,107,0,0.3);
-    border-radius: 10px;
-    padding: 36px 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-    position: relative;
-  }
-  .upload-area:hover, .upload-area.drag-over {
-    border-color: var(--orange);
-    background: rgba(255,107,0,0.05);
-  }
-  .upload-area input[type="file"] {
-    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
-  }
-  .upload-icon { font-size: 36px; margin-bottom: 10px; }
-  .upload-text { font-size: 14px; color: var(--gray); }
-  .upload-text strong { color: var(--orange-bright); }
-  .upload-preview {
-    margin-top: 14px;
-    display: none;
-    text-align: center;
-  }
-  .upload-preview img {
-    max-width: 100%; max-height: 180px;
-    border-radius: 8px;
-    border: 1px solid rgba(255,107,0,0.3);
-    object-fit: cover;
-  }
-  .upload-preview .file-name {
-    font-size: 12px; color: var(--orange); margin-top: 8px;
-  }
-
   /* Buttons */
-  .btn-primary {
+  .btn-whatsapp {
     width: 100%;
-    background: linear-gradient(135deg, #FF6B00, #FF8C00);
+    background: linear-gradient(135deg, #25D366, #1BD741);
     border: none;
     border-radius: 10px;
     padding: 16px;
     font-family: 'Oswald', sans-serif;
     font-size: 18px;
     font-weight: 700;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--black);
+    color: #FFFFFF;
     cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.2s, opacity 0.2s;
-    box-shadow: 0 4px 20px rgba(255,107,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
   }
-  .btn-primary:hover:not(:disabled) {
+  .btn-whatsapp:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(255,107,0,0.6);
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5);
   }
-  .btn-primary:active:not(:disabled) { transform: translateY(0); }
-  .btn-primary:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    box-shadow: none;
-  }
+  .btn-whatsapp:active { transform: translateY(0); }
 
   /* Status message */
   #statusMsg {
@@ -463,50 +410,6 @@
     font-size: 14px;
     min-height: 22px;
     font-weight: 500;
-  }
-
-  /* Success overlay */
-  .success-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.85);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-  .success-overlay.active { display: flex; }
-  .success-card {
-    background: var(--dark2);
-    border: 2px solid var(--orange);
-    border-radius: 16px;
-    padding: 48px 36px;
-    text-align: center;
-    max-width: 440px;
-    box-shadow: 0 0 60px var(--orange-glow);
-    animation: popIn 0.35s ease;
-  }
-  @keyframes popIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-  .success-icon { font-size: 56px; margin-bottom: 16px; }
-  .success-card h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 36px;
-    color: var(--orange);
-    letter-spacing: 3px;
-    margin-bottom: 10px;
-  }
-  .success-card p { color: var(--gray); font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
-  .btn-close {
-    background: var(--orange);
-    border: none; border-radius: 8px;
-    padding: 12px 32px;
-    font-family: 'Oswald', sans-serif;
-    font-size: 16px; font-weight: 600;
-    letter-spacing: 2px; text-transform: uppercase;
-    color: var(--black); cursor: pointer;
   }
 
   /* ── FOOTER ── */
@@ -525,13 +428,6 @@
   }
   .footer-slogan span { color: var(--orange); }
   footer p { font-size: 12px; color: #444; margin-top: 8px; }
-
-  /* Domino decoration */
-  .domino-deco {
-    position: absolute;
-    opacity: 0.07;
-    pointer-events: none;
-  }
 
   @media (max-width: 560px) {
     .form-row { grid-template-columns: 1fr; }
@@ -576,7 +472,7 @@
     <div class="info-card">
       <div class="icon">👥</div>
       <div class="label">Modalidade</div>
-      <div class="value">Apenas duplas</div>
+      <div class="value">Apenas duplets</div>
     </div>
     <div class="info-card">
       <div class="icon">💰</div>
@@ -606,7 +502,7 @@
     <div class="info-card wide">
       <div class="icon">📝</div>
       <div class="label">Como se inscrever</div>
-      <div class="value">Presencialmente com Ianne (3º info B) &nbsp;·&nbsp; Link de inscrição disponível dia 15/06</div>
+      <div class="value">Preencha os dados abaixo, copie a chave PIX para efetuar o pagamento e clique no botão para enviar o comprovante diretamente no WhatsApp!</div>
     </div>
   </div>
 </section>
@@ -615,7 +511,7 @@
   <div class="form-wrap">
     <div class="dupla-header">
       <h2>INSCRIÇÃO DA DUPLA</h2>
-      <p>Preencha os dados da sua dupla e confirme sua inscrição via WhatsApp.</p>
+      <p>Insira as informações da dupla e envie os dados junto ao comprovante por WhatsApp.</p>
     </div>
 
     <div class="dupla-box">
@@ -655,7 +551,7 @@
     <div class="pix-box">
       <h3>💳 Pagamento via PIX</h3>
       <div class="pix-value">R$ 10,00</div>
-      <div class="pix-desc">Valor por dupla &mdash; realize o pagamento antes de confirmar no WhatsApp.</div>
+      <div class="pix-desc">Valor por dupla &mdash; realize o pagamento e clique abaixo para enviar no WhatsApp</div>
       <div class="pix-key-box" onclick="copyPix()">
         <span class="pix-key">milllaemanuelli@gmail.com</span>
         <button class="copy-btn" title="Copiar chave PIX">📋</button>
@@ -663,8 +559,9 @@
       <div class="copy-toast" id="copyToast"></div>
     </div>
 
-    <button class="btn-primary" id="btnEnviar" onclick="enviarInscricao()" disabled>
-      CONFIRMAR INSCRIÇÃO NO WHATSAPP
+    <button class="btn-whatsapp" onclick="enviarWhatsApp()">
+      <svg width="24" height="24" viewBox="0 0 448 512" fill="currentColor"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+      COMPARTILHAR DADOS E ENVIAR COMPROVANTE
     </button>
     <div id="statusMsg"></div>
   </div>
@@ -676,15 +573,6 @@
   <p style="margin-top:6px; color:#333;">@3rao_infob</p>
 </footer>
 
-<div class="success-overlay" id="successOverlay">
-  <div class="success-card">
-    <div class="success-icon">🏆</div>
-    <h2>INSCRIÇÃO QUASE PRONTA!</h2>
-    <p>Você será redirecionado para o WhatsApp para confirmar sua inscrição. Envie o comprovante por lá.</p>
-    <button class="btn-close" onclick="closeSuccess()">FECHAR</button>
-  </div>
-</div>
-
 <script>
   // ─── PIX copy ───
   function copyPix() {
@@ -695,17 +583,11 @@
     });
   }
 
-  // ─── File preview ───
-  function checkForm() {
-    const nome1  = document.getElementById('nome1').value.trim();
-    const turma1 = document.getElementById('turma1').value.trim();
-    const nome2  = document.getElementById('nome2').value.trim();
-    const turma2 = document.getElementById('turma2').value.trim();
-    document.getElementById('btnEnviar').disabled = !(nome1 && turma1 && nome2 && turma2);
-  }
+  // ─── Enviar WhatsApp ───
+  function enviarWhatsApp() {
+    // AJUSTE AQUI: Insira o número de telefone da pessoa responsável (com DDD, ex: "5586999999999")
+    const numeroWhatsApp = "558699914751"; 
 
-  // ─── Submit ───
-  function enviarInscricao() {
     const nomeDupla = document.getElementById('nomeDupla').value.trim();
     const nome1    = document.getElementById('nome1').value.trim();
     const turma1   = document.getElementById('turma1').value.trim();
@@ -713,48 +595,31 @@
     const turma2   = document.getElementById('turma2').value.trim();
 
     if (!nome1 || !turma1 || !nome2 || !turma2) {
-      document.getElementById('statusMsg').style.color = '#FF4444';
-      document.getElementById('statusMsg').textContent = '⚠️ Preencha os nomes e turmas de ambos os jogadores.';
+      const status = document.getElementById('statusMsg');
+      status.style.color = '#FF4444';
+      status.textContent = '⚠️ Por favor, preencha os nomes e turmas de ambos os jogadores.';
       return;
     }
 
-    const btn = document.getElementById('btnEnviar');
-    btn.disabled = true;
-    btn.textContent = 'ABRINDO WHATSAPP…';
     document.getElementById('statusMsg').textContent = '';
 
-    const finalNomeDupla = nomeDupla || `${nome1} & ${nome2}`;
-    const numeroWhats = '5586994559525';
-    const textoMensagem = encodeURIComponent(
-      `👋 *Nova Inscrição - Campeonato de Dominó 2026*\n\n` +
-      `🎯 *Dupla:* ${finalNomeDupla}\n\n` +
-      `👤 *Jogador 1:* ${nome1}\n` +
-      `📚 *Turma 1:* ${turma1}\n\n` +
-      `👤 *Jogador 2:* ${nome2}\n` +
-      `📚 *Turma 2:* ${turma2}\n\n` +
-      `_Por favor, envie o comprovante de PIX nesta conversa._`
-    );
-    const urlWhats = `https://api.whatsapp.com/send?phone=${numeroWhats}&text=${textoMensagem}`;
+    const nomeDuplaFinal = nomeDupla || `${nome1} & ${nome2}`;
 
-    setTimeout(() => {
-      document.getElementById('successOverlay').classList.add('active');
-      btn.textContent = 'CONFIRMAR INSCRIÇÃO NO WHATSAPP';
-      btn.disabled = false;
-      window.open(urlWhats, '_blank');
-      resetForm();
-    }, 500);
-  }
+    // Montando o texto elegante para o WhatsApp
+    const texto = `🏆 *Inscrição - Campeonato de Dominó 2026* 🏆\n\n` +
+                  `🎯 *Dupla:* ${nomeDuplaFinal}\n\n` +
+                  `👤 *Jogador 1:* ${nome1}\n` +
+                  `🎓 *Turma:* ${turma1}\n\n` +
+                  `👤 *Jogador 2:* ${nome2}\n` +
+                  `🎓 *Turma:* ${turma2}\n\n` +
+                  `📌 _Estou enviando em anexo o comprovante de pagamento de R$ 10,00._`;
 
-  function resetForm() {
-    ['nomeDupla','nome1','turma1','nome2','turma2'].forEach(id => {
-      document.getElementById(id).value = '';
-    });
-    document.getElementById('btnEnviar').disabled = true;
-  }
+    // Codificando o texto para a URL
+    const textoCodificado = encodeURIComponent(texto);
+    const urlUrl = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${textoCodificado}`;
 
-  function closeSuccess() {
-    document.getElementById('successOverlay').classList.remove('active');
-    document.getElementById('statusMsg').textContent = '';
+    // Abre o WhatsApp numa nova aba
+    window.open(urlUrl, '_blank');
   }
 </script>
 </body>
