@@ -585,8 +585,8 @@
 
   // ─── Enviar WhatsApp ───
   function enviarWhatsApp() {
-    // Link do QR Code de contato do usuário
-    const urlQRWhatsApp = "https://wa.me/qr/BKF424PPVN52A1"; 
+    // LINK UNIVERSAL: Funciona perfeitamente em iPhone, Android e Web sem pedir para baixar o app
+    const urlUniversalWhatsApp = "https://wa.me/message/BKF424PPVN52A1"; 
 
     const nomeDupla = document.getElementById('nomeDupla').value.trim();
     const nome1    = document.getElementById('nome1').value.trim();
@@ -620,13 +620,13 @@
       statusMsg.style.color = '#4CAF50';
       statusMsg.textContent = '📋 Dados copiados! Cole (Ctrl+V) na conversa e envie o comprovante.';
       
-      // Abre o link do seu QR Code em uma nova aba após um pequeno delay
+      // Abre o link do WhatsApp de forma limpa e direta
       setTimeout(() => {
-        window.open(urlQRWhatsApp, '_blank');
-      }, 1200);
+        window.open(urlUniversalWhatsApp, '_blank');
+      }, 1000);
     }).catch(() => {
-      // Fallback básico caso o navegador bloqueie a cópia direta
-      window.open(urlQRWhatsApp, '_blank');
+      // Fallback de segurança caso o navegador barra a cópia
+      window.open(urlUniversalWhatsApp, '_blank');
     });
   }
 </script>
