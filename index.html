@@ -542,7 +542,6 @@
 </head>
 <body>
 
-<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
 <section class="hero">
   <div class="lightning">
     <svg viewBox="0 0 800 900" preserveAspectRatio="xMidYMid slice">
@@ -554,7 +553,6 @@
   </div>
 
   <div class="hero-content">
-    <!-- Logo -->
     <div class="logo-circle">
       <div class="logo-inner">
         <div class="logo-year">2026</div>
@@ -572,7 +570,6 @@
   </div>
 </section>
 
-<!-- ════════════════════════════ INFORMAÇÕES ════════════════════════════ -->
 <section class="info-section">
   <h2 class="section-title">INFORMAÇÕES</h2>
   <div class="info-grid">
@@ -589,7 +586,7 @@
     <div class="info-card">
       <div class="icon">📅</div>
       <div class="label">Data</div>
-      <div class="value">16 de junho de 2026</div>
+      <div class="value">17 de junho de 2026</div>
     </div>
     <div class="info-card">
       <div class="icon">🕙</div>
@@ -614,7 +611,6 @@
   </div>
 </section>
 
-<!-- ════════════════════════════ FORMULÁRIO ════════════════════════════ -->
 <section class="form-section">
   <div class="form-wrap">
     <div class="dupla-header">
@@ -622,7 +618,6 @@
       <p>Preencha os dados da sua dupla e envie o comprovante do PIX para confirmar.</p>
     </div>
 
-    <!-- Nome da dupla + turma -->
     <div class="dupla-box">
       <h3>🎯 Nome & Turma da Dupla</h3>
       <div class="form-row single">
@@ -657,7 +652,6 @@
       </div>
     </div>
 
-    <!-- PIX -->
     <div class="pix-box">
       <h3>💳 Pagamento via PIX</h3>
       <div class="pix-value">R$ 10,00</div>
@@ -669,7 +663,6 @@
       <div class="copy-toast" id="copyToast"></div>
     </div>
 
-    <!-- Upload comprovante -->
     <div class="upload-box">
       <h3>📎 Comprovante de Pagamento</h3>
       <div class="upload-area" id="uploadArea">
@@ -686,7 +679,6 @@
       </div>
     </div>
 
-    <!-- Botão confirmar -->
     <button class="btn-primary" id="btnEnviar" onclick="enviarInscricao()" disabled>
       ENVIAR COMPROVANTE E CONFIRMAR INSCRIÇÃO
     </button>
@@ -694,19 +686,17 @@
   </div>
 </section>
 
-<!-- ════════════════════════════ FOOTER ════════════════════════════ -->
 <footer>
   <div class="footer-slogan">PARTICIPE E MOSTRE <span>SEU TALENTO!</span></div>
   <p>Terceirão Informática 2026 · 3º B – Informática · IFPI Campus Angical</p>
   <p style="margin-top:6px; color:#333;">@3rao_infob</p>
 </footer>
 
-<!-- Success Modal -->
 <div class="success-overlay" id="successOverlay">
   <div class="success-card">
     <div class="success-icon">🏆</div>
     <h2>INSCRIÇÃO ENVIADA!</h2>
-    <p>Sua inscrição foi recebida e será analisada. Você será confirmado assim que o comprovante for validado. Boa sorte no campeonato!</p>
+    <p>Sua inscrição foi recebida e você está sendo redirecionado para o WhatsApp para enviar o comprovante! Boa sorte no campeonato!</p>
     <button class="btn-close" onclick="closeSuccess()">FECHAR</button>
   </div>
 </div>
@@ -769,10 +759,11 @@
     // Read file as base64 and save to localStorage
     const reader = new FileReader();
     reader.onload = function(e) {
+      const finalNomeDupla = nomeDupla || `${nome1} & ${nome2}`;
       const inscricoes = JSON.parse(localStorage.getItem('inscricoes_domino') || '[]');
       inscricoes.push({
         id: Date.now(),
-        nomeDupla: nomeDupla || `${nome1} & ${nome2}`,
+        nomeDupla: finalNomeDupla,
         jogador1: { nome: nome1, turma: turma1 },
         jogador2: { nome: nome2, turma: turma2 },
         comprovante: e.target.result,
@@ -782,10 +773,28 @@
       });
       localStorage.setItem('inscricoes_domino', JSON.stringify(inscricoes));
 
+      // ─── REDIRECIONAMENTO WHATSAPP ───
+      const numeroWhats = "5586994559525";
+      const textoMensagem = encodeURIComponent(
+        `👋 *Nova Inscrição - Campeonato de Dominó 2026*\n\n` +
+        `🎯 *Dupla:* ${finalNomeDupla}\n\n` +
+        `👤 *Jogador 1:* ${nome1}\n` +
+        `📚 *Turma 1:* ${turma1}\n\n` +
+        `👤 *Jogador 2:* ${nome2}\n` +
+        `📚 *Turma 2:* ${turma2}\n\n` +
+        `🖼️ _Estou enviando o comprovante em anexo nesta conversa._`
+      );
+      
+      const urlWhats = `https://api.whatsapp.com/send?phone=${numeroWhats}&text=${textoMensagem}`;
+
       setTimeout(() => {
         document.getElementById('successOverlay').classList.add('active');
         btn.textContent = 'ENVIAR COMPROVANTE E CONFIRMAR INSCRIÇÃO';
         btn.disabled = false;
+        
+        // Abre o WhatsApp na nova aba
+        window.open(urlWhats, '_blank');
+        
         resetForm();
       }, 800);
     };
