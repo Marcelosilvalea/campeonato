@@ -585,67 +585,47 @@
 
   // ─── Enviar WhatsApp ───
   function enviarWhatsApp() {
-  const nomeDupla = document.getElementById('nomeDupla').value.trim();
-  const nome1 = document.getElementById('nome1').value.trim();
-  const turma1 = document.getElementById('turma1').value.trim();
-  const nome2 = document.getElementById('nome2').value.trim();
-  const turma2 = document.getElementById('turma2').value.trim();
+    // LINK 100% UNIVERSAL: Abre a app no Android/iOS e a aba correta no PC sem ecrãs de erro
+    const urlUniversalWhatsApp = "https://wa.me/5586994559525"; 
 
-  if (!nome1 || !turma1 || !nome2 || !turma2) {
-    const status = document.getElementById('statusMsg');
-    status.style.color = '#FF4444';
-    status.textContent = '⚠️ Por favor, preencha os nomes e turmas de ambos os jogadores.';
-    return;
-  }
+    const nomeDupla = document.getElementById('nomeDupla').value.trim();
+    const nome1    = document.getElementById('nome1').value.trim();
+    const turma1   = document.getElementById('turma1').value.trim();
+    const nome2    = document.getElementById('nome2').value.trim();
+    const turma2   = document.getElementById('turma2').value.trim();
 
-  const nomeDuplaFinal = nomeDupla || `${nome1} & ${nome2}`;
-
-  const textoInscricao =
-`🏆 *Inscrição - Campeonato de Dominó 2026* 🏆
-
-🎯 *Dupla:* ${nomeDuplaFinal}
-
-👤 *Jogador 1:* ${nome1}
-🎓 *Turma:* ${turma1}
-
-👤 *Jogador 2:* ${nome2}
-🎓 *Turma:* ${turma2}
-
-📌 Estou enviando em anexo o comprovante de pagamento de R$ 10,00.`;
-
-  const mensagem = encodeURIComponent(textoInscricao);
-
-  window.open(
-    `https://wa.me/5586994559525?text=${mensagem}`,
-    '_blank'
-  );
-}
+    if (!nome1 || !turma1 || !nome2 || !turma2) {
+      const status = document.getElementById('statusMsg');
+      status.style.color = '#FF4444';
+      status.textContent = '⚠️ Por favor, preencha os nomes e turmas de ambos os jogadores.';
+      return;
+    }
 
     const statusMsg = document.getElementById('statusMsg');
     statusMsg.textContent = '';
 
     const nomeDuplaFinal = nomeDupla || `${nome1} & ${nome2}`;
 
-    // Montando o texto elegante para o usuário colar na conversa
+    // Montando o texto elegante para o utilizador colar na conversa
     const textoInscricao = `🏆 *Inscrição - Campeonato de Dominó 2026* 🏆\n\n` +
                            `🎯 *Dupla:* ${nomeDuplaFinal}\n\n` +
                            `👤 *Jogador 1:* ${nome1}\n` +
                            `🎓 *Turma:* ${turma1}\n\n` +
                            `👤 *Jogador 2:* ${nome2}\n` +
                            `🎓 *Turma:* ${turma2}\n\n` +
-                           `📌 _Estou enviando em anexo o comprovante de pagamento de R$ 10,00._`;
+                           `📌 _Estou a enviar em anexo o comprovante de pagamento de R$ 10,00._`;
 
-    // Copia o texto estruturado para a área de transferência do usuário
+    // Copia o texto estruturado de forma nativa e segura
     navigator.clipboard.writeText(textoInscricao).then(() => {
       statusMsg.style.color = '#4CAF50';
       statusMsg.textContent = '📋 Dados copiados! Cole (Ctrl+V) na conversa e envie o comprovante.';
       
-      // Abre o link do WhatsApp de forma limpa e direta
+      // Abre o chat instantaneamente
       setTimeout(() => {
         window.open(urlUniversalWhatsApp, '_blank');
       }, 1000);
     }).catch(() => {
-      // Fallback de segurança caso o navegador barra a cópia
+      // Fallback automático se a permissão de cópia for bloqueada temporariamente
       window.open(urlUniversalWhatsApp, '_blank');
     });
   }
